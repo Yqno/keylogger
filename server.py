@@ -1,4 +1,5 @@
-# Listener for the Keylogger, only for educational purposes
+# Listener for the Keylogger
+# I assume no liability for damages it is for educational purposes only 
 
 import socket
 
