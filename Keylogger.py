@@ -4,8 +4,8 @@ import socket
 import time
 import json
 
-TCP_IP = input("Enter your TCP IP: ")
-TCP_PORT = int(input("Enter your TCP Port: "))  # Ensure port is an integer
+TCP_IP = "Your Server IP Here"
+TCP_PORT = " Your Port here"
 BUFFER_SIZE = 1024
 
 # Socket connection setup
