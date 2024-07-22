@@ -10,5 +10,5 @@ Make sure to have python and pynput installed on that recording device
 Python:
 https://www.python.org/ 
 
-Install pynput:
+Install pynput on a terminal or powershell:
 ```pip install pynput ```
